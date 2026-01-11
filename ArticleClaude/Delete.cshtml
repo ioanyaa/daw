@@ -1,0 +1,55 @@
+@model ArticlesApp.Models.Category
+
+@{
+    ViewData["Title"] = "Șterge Categorie";
+}
+
+<div class="container mt-4">
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <hr />
+
+    @if (Model.Articles.Any())
+    {
+        <div class="alert alert-danger">
+            <h4>⚠️ Această categorie NU poate fi ștearsă!</h4>
+            <p>Categoria conține <strong>@Model.Articles.Count articole</strong>. Șterge mai întâi articolele sau mută-le în altă categorie.</p>
+        </div>
+
+        <h5>Articole în această categorie:</h5>
+        <ul class="list-group mb-3">
+            @foreach (var article in Model.Articles)
+            {
+                <li class="list-group-item">
+                    @article.Title
+                    <a asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id" class="btn btn-sm btn-info float-end">
+                        Vezi
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <a asp-action="Index" class="btn btn-secondary">Înapoi</a>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <h4>Ești sigur că vrei să ștergi această categorie?</h4>
+        </div>
+
+        <dl class="row">
+            <dt class="col-sm-3">Denumire</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+
+            <dt class="col-sm-3">Articole</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-success">Niciun articol</span>
+            </dd>
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Șterge Definitiv</button>
+            <a asp-action="Index" class="btn btn-secondary">Anulează</a>
+        </form>
+    }
+</div>

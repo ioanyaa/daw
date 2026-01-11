@@ -1,0 +1,39 @@
+@model ArticlesApp.Models.Article
+
+@{
+    ViewData["Title"] = "Detalii Articol";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>@Model.Title</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Categorie</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-info fs-6">@Model.Category?.Title</span>
+                </dd>
+
+                <dt class="col-sm-3">Data Publicării</dt>
+                <dd class="col-sm-9">@Model.Date.ToString("dd MMMM yyyy, HH:mm")</dd>
+
+                <dt class="col-sm-3">Conținut</dt>
+                <dd class="col-sm-9">
+                    <div class="border p-3 bg-light rounded">
+                        @Model.Content
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editează</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Șterge</a>
+            <a asp-action="Index" class="btn btn-secondary">Înapoi la listă</a>
+        </div>
+    </div>
+</div>
